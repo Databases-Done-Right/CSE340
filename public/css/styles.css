@@ -92,6 +92,20 @@ nav ul li a {
   margin-left:5%;
 }
 
+#hpHeroImageCTA h2 {
+  margin-bottom:0px;
+}
+
+#hpHeroImageCTA ul {
+  list-style-type: none;
+  padding-left:0px;
+  margin-top:5px;
+}
+
+#hpHeroImageCTA li {
+  padding-bottom:4px;
+}
+
 #hpHeroCTAButton {
   text-decoration:none;
   color:#fff;
@@ -101,6 +115,35 @@ nav ul li a {
   margin:0px auto;
   text-align:center;
   display:inline-block;
+}
+
+#hpMainColumns {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top:30px;
+  grid-gap: 30px;
+}
+
+#upgradeGridContainer {
+  display:grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+}
+
+.upgradeContainer img { height:50px; }
+.upgradeContainer {
+  text-align:center;
+  margin-bottom:20px;
+}
+.upgradeContainer > div:nth-child(1) {
+  background-color:var(--mainTrimColor);
+  border:solid 1px #000;
+  border-radius:5px;
+  padding:5px;
+  margin:10px;
+}
+
+#hpReviews li {
+  margin-bottom:10px;
 }
 
 footer {
