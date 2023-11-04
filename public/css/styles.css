@@ -17,7 +17,7 @@ body {
 }
 
 #wrapper {
-  max-width:1200px;
+  max-width:1000px;
   margin:20px auto;
   border:solid 4px var(--mainTrimColor);
   background-color:white;
@@ -70,6 +70,37 @@ nav ul li a {
   color:#fff;
   text-decoration:none;
 
+}
+
+#hpHeroImageContainer {
+  width:100%;
+  background-image: url('../images/vehicles/delorean.jpg');
+  background-repeat:no-repeat;
+  height:300px;
+  background-size:contain;
+  background-position: center center;
+}
+
+#hpHeroImageCTA {
+  background: rgba(255,255,255,.85);
+  width:34%;
+  border-radius:10px;
+  border:solid 1px #fff;
+  padding:30px;
+  color:#000;
+  font-weight:bold;
+  margin-left:5%;
+}
+
+#hpHeroCTAButton {
+  text-decoration:none;
+  color:#fff;
+  background-color: var(--mainTrimColor);
+  padding:10px 0px;
+  width:80%;
+  margin:0px auto;
+  text-align:center;
+  display:inline-block;
 }
 
 footer {
