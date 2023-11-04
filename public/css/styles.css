@@ -4,3 +4,79 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --mainTrimColor: blue;
+}
+
+body {
+  background-image:url("../images/site/checkerboard.jpg");
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  font-size:18px;
+}
+
+#wrapper {
+  max-width:1200px;
+  margin:20px auto;
+  border:solid 4px var(--mainTrimColor);
+  background-color:white;
+  border-radius:10px;
+  padding:20px;
+}
+
+#top-header .siteName a {
+  font-size:2em;
+  text-decoration:none;
+  color:#000;
+}
+
+#top-header .siteName, #tools {
+  display:inline-block;
+  width:49%;
+}
+
+#tools {
+  text-align:right;
+}
+
+#tools a {
+  text-decoration:none;
+  color:#000;
+  text-align:right;
+}
+
+nav {
+  background-color:#000;
+}
+
+nav ul {
+  list-style-type: none;
+  background-color:#000;
+  border-radius:5px;
+  box-sizing:border-box;
+}
+
+nav ul li {
+  display:inline-block;
+  padding:10px 0px;
+  width:19%;
+  box-sizing: border-box;
+  text-align:center;
+}
+
+nav ul li a {
+  display:block;
+  color:#fff;
+  text-decoration:none;
+
+}
+
+footer {
+  font-size:.7em;
+}
+
+footer p {
+  margin-top:40px;
+  margin-bottom:0px;
+}

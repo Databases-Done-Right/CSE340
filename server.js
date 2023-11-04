@@ -6,6 +6,7 @@
  * Require Statements
  *************************/
 const express = require("express")
+var path = require('path')
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
@@ -37,3 +38,9 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
+app.get("/", (req, res) => {
+  res.render(path.join(__dirname, './views', 'index.ejs'))
+})
+
+app.use(express.static(path.join(__dirname, '/public')))
