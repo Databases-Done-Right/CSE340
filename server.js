@@ -11,6 +11,7 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const baseController = require("./controllers/baseController")
 
 /* ***********************
  * View Engine and Templates
@@ -39,8 +40,10 @@ app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
 
-app.get("/", (req, res) => {
-  res.render(path.join(__dirname, './views', 'index.ejs'))
-})
+//app.get("/", (req, res) => {
+//  res.render(path.join(__dirname, './views', 'index.ejs'))
+//})
+
+app.get("/", baseController.buildHome)
 
 app.use(express.static(path.join(__dirname, '/public')))
