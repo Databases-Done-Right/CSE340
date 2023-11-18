@@ -237,3 +237,15 @@ VALUES   (
 
 -- Update all records in the inventory table to add "/vehicles" to the middle of the file path in the inv_image and inv_thumbnail columns using a single query.
 UPDATE inventory SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'), inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+
+-- correct vechile image paths
+UPDATE inventory SET inv_image = '/images/vehicles/batmobile.jpg', inv_thumbnail = '/images/vehicles/batmobile-tn.jpg' WHERE inv_id = 2;
+UPDATE inventory SET inv_image = '/images/vehicles/survan.jpg', inv_thumbnail = '/images/vehicles/survan-tn.jpg' WHERE inv_id = 3;
+UPDATE inventory SET inv_image = '/images/vehicles/dog-car.jpg', inv_thumbnail = '/images/vehicles/dog-car-tn.jpg' WHERE inv_id = 4;
+UPDATE inventory SET inv_image = '/images/vehicles/wrangler.jpg', inv_thumbnail = '/images/vehicles/wrangler-tn.jpg' WHERE inv_id = 5;
+UPDATE inventory SET inv_image = '/images/vehicles/adventador.jpg', inv_thumbnail = '/images/vehicles/adventador-tn.jpg' WHERE inv_id = 6;
+UPDATE inventory SET inv_image = '/images/vehicles/monster-truck.jpg', inv_thumbnail = '/images/vehicles/monster-truck-tn.jpg' WHERE inv_id = 8;
+UPDATE inventory SET inv_image = '/images/vehicles/mechanic.jpg', inv_thumbnail = '/images/vehicles/mechanic-tn.jpg' WHERE inv_id = 11;
+UPDATE inventory SET inv_image = '/images/vehicles/model-t.jpg', inv_thumbnail = '/images/vehicles/model-t-tn.jpg' WHERE inv_id = 12;
+UPDATE inventory SET inv_image = '/images/vehicles/mystery-van.jpg', inv_thumbnail = '/images/vehicles/mystery-van-tn.jpg' WHERE inv_id = 13;
+UPDATE inventory SET inv_image = '/images/vehicles/crwn-vic.jpg', inv_thumbnail = '/images/vehicles/crwn-vic-tn.jpg' WHERE inv_id = 15;

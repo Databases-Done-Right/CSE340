@@ -57,4 +57,33 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
 
+/* **************************************
+* Build the vehicle view HTML
+* ************************************ */
+Util.buildVehicleView = async function(data){
+  const {
+    inv_image: image,
+    inv_price: price,
+    inv_miles: mileage,
+    inv_description: description,
+    inv_year: year,
+    inv_make: make,
+    inv_model: model,
+  } = data[0];
+  let tbr
+  if(data.length > 0){
+    tbr = `<div id="vehicleContainer">
+            <div class="vehicleImageContainer"><img src="${image}" alt="${year} ${make} ${model}"></div>
+            <div class="vehicleDataContainer">
+              <div class="vehiclePrice"><span>Price</span> $${new Intl.NumberFormat('en-US').format(price)}</div>
+              <div class="vehicleMilage"><span>Mileage</span> ${new Intl.NumberFormat('en-US').format(mileage)}</div>
+              <div class="vehicleDescription">${description}</div>
+            </div>
+          </div>`
+  } else { 
+    tbr += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
+  }
+  return tbr
+}
+
 module.exports = Util
