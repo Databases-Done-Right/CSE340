@@ -23,4 +23,12 @@
       grid-column: 2/3;
       grid-row: 1/2;
     }
+
+    #vehicleContainer {
+      display:flex;
+      gap: 30px;
+    }
+    #vehicleContainer .vehicleImageContainer {
+      margin-bottom: 0px;
+    }
 }

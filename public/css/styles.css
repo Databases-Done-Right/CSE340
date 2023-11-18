@@ -170,6 +170,36 @@ nav ul li a {
   margin-bottom:10px;
 }
 
+#vehicleContainer .vehicleImageContainer {
+  width:auto;
+  margin:0px auto 30px;
+  text-align:center;
+}
+
+#vehicleContainer img {
+  border: solid 1px #666;
+  padding:2px;
+  border-radius: 5px;
+}
+
+#vehicleContainer .vehiclePrice {
+  font-size:2em;
+  font-weight:bold;
+}
+
+#vehicleContainer .vehicleMilage {
+  margin:10px 0px 30px;
+  font-size:1.1em;
+}
+
+#vehicleContainer .vehicleMilage span {
+  font-weight:bold;
+}
+
+#vehicleContainer .vehicleDescription {
+
+}
+
 footer {
   font-size:.7em;
 }
