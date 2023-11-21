@@ -55,6 +55,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes - any route that starts with /inv will be redirected to the inventoryRoute file to find the rest of the route
 app.use("/inv", inventoryRoute)
 
+app.use("/badlink", utilities.handleErrors(baseController.badLink))
+
 app.use(express.static(path.join(__dirname, '/public')))
 
 
