@@ -6,15 +6,18 @@
 } %>
 
 <%# Message Block %>
-<%# messages() %>
+<%- messages() %>
 
 <div class="alignCenter">
     <div id="loginFormContainer">
-        <form method="post" action="">
-            <div><span>Email:</span><input type="text" name="account_email"></div>
-            <div><span>Password:</span><input type="password" name="account_password"></div>
-            <div class="buttonContainer"><input type="submit" value="Login"></div>
+        <form action="/account/register" method="post">
+            <div><span>First Name*:</span><input type="text" name="account_firstname"></div>
+            <div><span>Last Name*:</span><input type="text" name="account_lastname"></div>
+            <div><span>Email*:</span><input type="text" name="account_email"></div>
+            <div><span>Password*:</span><input type="password" name="account_password"></div>
+            <div class="buttonContainer"><input type="submit" value="Register"></div>
         </form>
-        <div class="noAccountLink">Don't have an account? <a href="account/registration">Sign-Up</a></div>
+        <div class="fineprint">* Denotes a required field.</div>
+        <div class="fineprint">^ Passwords must be a minimum of 12 characters in length and include at least 1 capital letter, 1 number, and 1 special character.</div>
     </div>
 </div>

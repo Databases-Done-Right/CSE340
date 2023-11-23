@@ -267,3 +267,8 @@ footer p {
   padding:1px;
   border-radius:10px;
 }
+
+.fineprint {
+  font-size:10px;
+  margin:5px 10% 0px;
+}
