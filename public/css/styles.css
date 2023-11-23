@@ -197,10 +197,6 @@ nav ul li a {
   font-weight:bold;
 }
 
-#vehicleContainer .vehicleDescription {
-
-}
-
 footer {
   font-size:.7em;
 }
@@ -208,4 +204,72 @@ footer {
 footer p {
   margin-top:40px;
   margin-bottom:0px;
+}
+
+/* Login Form */
+#loginFormContainer {
+  margin:10px auto 30px;
+  width:auto;
+  border: solid 1px #999;
+  background-color:#ddd;
+  border-radius:5px;
+  padding:20px;
+  text-align:center;
+  display:inline-block;
+}
+
+#loginFormContainer form {
+  display:inline-block;
+}
+
+#loginFormContainer form > div {
+  width:100%;
+  max-width:500px;
+  margin-bottom:10px;
+}
+
+#loginFormContainer form > div > span {
+  width:100px;
+  margin-right:20px;
+  display:inline-block;
+  text-align:left;
+}
+
+#loginFormContainer .noAccountLink {
+  margin-top:20px;
+}
+
+/* Vehicle Classification */
+#inv-display {
+  display:grid;
+  grid-template-columns: 1fr;
+  list-style-type: none;
+}
+
+#inv-display li {
+  text-align:center;
+}
+
+#inv-display li a {
+  color:#000;
+  text-decoration:none;
+}
+
+#inv-display h2 {
+  margin:10px auto;
+}
+
+#inv-display .namePrice {
+  margin-bottom:40px;
+}
+
+#inv-display img {
+  border: solid 1px #ddd;
+  padding:1px;
+  border-radius:10px;
+}
+
+.fineprint {
+  font-size:10px;
+  margin:5px 10% 0px;
 }
