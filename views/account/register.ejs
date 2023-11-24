@@ -8,16 +8,32 @@
 <%# Message Block %>
 <%- messages() %>
 
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
 <div class="alignCenter">
     <div id="loginFormContainer">
         <form action="/account/register" method="post">
-            <div><span>First Name*:</span><input type="text" name="account_firstname"></div>
-            <div><span>Last Name*:</span><input type="text" name="account_lastname"></div>
-            <div><span>Email*:</span><input type="text" name="account_email"></div>
-            <div><span>Password*:</span><input type="password" name="account_password"></div>
+            <div><span>First Name*:</span><input type="text" name="account_firstname" required></div>
+            <div><span>Last Name*:</span><input type="text" name="account_lastname" required></div>
+            <div><span>Email*:</span><input type="email" name="account_email" required></div>
+            <div><span>Password*:</span><input type="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></div>
+            <div class="inputInstructions">
+                <ul>
+                    <li>Your password must be a minimum of 12 characters in length</li>
+                    <li>Your password must include at least 1 capital letter</li>
+                    <li>Your password must include at least 1 number</li>
+                    <li>Your password must include at least 1 special character</li>
+                </ul>
+            </div>
             <div class="buttonContainer"><input type="submit" value="Register"></div>
         </form>
         <div class="fineprint">* Denotes a required field.</div>
-        <div class="fineprint">^ Passwords must be a minimum of 12 characters in length and include at least 1 capital letter, 1 number, and 1 special character.</div>
+        
     </div>
 </div>

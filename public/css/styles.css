@@ -273,3 +273,13 @@ footer p {
   font-size:10px;
   margin:5px 10% 0px;
 }
+
+.alignCenter {
+  text-align:center;
+}
+
+.inputInstructions ul {
+  margin-top:0px;
+  font-size:12px;
+  text-align:left;
+}
