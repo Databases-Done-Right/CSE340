@@ -14,9 +14,17 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 // Route to handle the account signup
 router.post(
     "/register",
-    regValidate.registationRules(),
+    regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
 )
+
+// Process the login attempt
+router.post(
+    "/login",
+    regValidate.loginRules(),
+    regValidate.checkRegData,
+    utilities.handleErrors(accountController.registerAccount)
+  )
 
 module.exports = router;
