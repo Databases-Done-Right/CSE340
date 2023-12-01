@@ -211,7 +211,7 @@ footer p {
   margin:10px auto 30px;
   width:auto;
   border: solid 1px #999;
-  background-color:#ddd;
+  background-color:#eee;
   border-radius:5px;
   padding:20px;
   text-align:center;
@@ -224,15 +224,35 @@ footer p {
 
 #loginFormContainer form > div {
   width:100%;
-  max-width:500px;
+  max-width:650px;
   margin-bottom:10px;
+  text-align: left;
 }
 
 #loginFormContainer form > div > span {
-  width:100px;
+  width:180px;
   margin-right:20px;
   display:inline-block;
   text-align:left;
+}
+
+#loginFormContainer form input, #loginFormContainer form select {
+  min-width:340px;
+}
+
+#loginFormContainer form .buttonContainer {
+  text-align:center;
+  margin-top:20px;
+}
+
+#loginFormContainer form input[type="submit"] {
+  min-width:0px;
+  background-color:blue;
+  color:#fff;
+  font-weight:bold;
+  padding:5px 10px;
+  border-radius:5px;
+  border:solid 1px #fff;
 }
 
 #loginFormContainer .noAccountLink {

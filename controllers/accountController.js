@@ -10,6 +10,7 @@ const accountCont = {}
 accountCont.buildLogin = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/login", {
+    metaTitle: `Account Login - CSE 340`,
     title: "Login",
     nav,
     errors: null,
@@ -22,6 +23,7 @@ accountCont.buildLogin = async function (req, res, next) {
 accountCont.buildRegister = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/register", {
+    metaTitle: `Register for a New Account - CSE 340`,
     title: "Register",
     nav,
     errors: null,
@@ -43,6 +45,7 @@ accountCont.registerAccount = async function registerAccount(req, res) {
   } catch (error) {
     req.flash("notice", 'Sorry, there was an error processing the registration.')
     res.status(500).render("account/register", {
+      metaTitle: `Registration Problem - CSE 340`,
       title: "Registration",
       nav,
       errors: null,
@@ -62,6 +65,7 @@ accountCont.registerAccount = async function registerAccount(req, res) {
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
     )
     res.status(201).render("account/login", {
+      metaTitle: `Login - CSE 340`,
       title: "Login",
       nav,
       errors: null,
@@ -69,6 +73,7 @@ accountCont.registerAccount = async function registerAccount(req, res) {
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/register", {
+      metaTitle: `Registration Failed - CSE 340`,
       title: "Registration",
       nav,
       errors: null,

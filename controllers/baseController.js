@@ -5,6 +5,7 @@ baseController.buildHome = async function(req, res){
   const nav = await utilities.getNav()
   // req.flash("notice", "This is a flash message.") // the first parameter is the class that is assigned to the message itself
   res.render("index", {
+    metaTitle: `CSE 340 - Homepage`,
     title: "Home",
     nav,
     errors: null,
@@ -14,6 +15,7 @@ baseController.buildHome = async function(req, res){
 baseController.badLink = async function(req, res){
   let nav = await utilities.getNav()
   res.render("errors/error", {
+    metaTitle: `CSE 340 - Server 500 Error`,
     title: '500',
     message: 'Something went wrong :-(',
     nav,

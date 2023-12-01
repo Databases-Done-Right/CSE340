@@ -1,0 +1,22 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%# Message Block %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<ul>
+    <li><b><a href="/inv/management/classification">New Classification</a></b> - Create a new classification for your inventory types.</li>
+    <li><b><a href="/inv/management/inventory">New Inventory</a></b> - Add a new vehicle to the site.</li>
+</ul>

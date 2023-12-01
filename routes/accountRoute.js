@@ -23,7 +23,7 @@ router.post(
 router.post(
     "/login",
     regValidate.loginRules(),
-    regValidate.checkRegData,
+    regValidate.checkLoginData,
     utilities.handleErrors(accountController.registerAccount)
   )
 
