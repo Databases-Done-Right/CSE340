@@ -56,6 +56,18 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
 
+ /* ************************
+ * Constructs the classification options HTML for forms
+ ************************** */
+Util.getClassificationOptions = async function (req, res, next) {
+  let data = await invModel.getClassifications()
+  let tbr = `<option value=""></option>`;
+  data.rows.forEach((row) => {
+    tbr += `<option value=" ${row.classification_id}"${row.classification_id == req ? " selected" : null }>${row.classification_name}</option>`;
+  })
+  return tbr
+}
+
 /* **************************************
 * Build the vehicle view HTML
 * ************************************ */

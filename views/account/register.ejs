@@ -19,9 +19,9 @@
 <div class="alignCenter">
     <div id="loginFormContainer">
         <form action="/account/register" method="post">
-            <div><span>First Name*:</span><input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>" required></div>
-            <div><span>Last Name*:</span><input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>" required></div>
-            <div><span>Email*:</span><input type="email" name="account_email" id="accountEmail" required value="<%= locals.account_email %>" required></div>
+            <div><span>First Name*:</span><input type="text" name="account_firstname" id="accountFirstname" value="<%= locals.account_firstname %>" required></div>
+            <div><span>Last Name*:</span><input type="text" name="account_lastname" id="accountLastname" value="<%= locals.account_lastname %>" required></div>
+            <div><span>Email*:</span><input type="email" name="account_email" id="accountEmail" value="<%= locals.account_email %>" required></div>
             <div><span>Password*:</span><input type="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></div>
             <div class="inputInstructions">
                 <ul>
