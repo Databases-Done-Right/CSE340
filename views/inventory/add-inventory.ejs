@@ -28,7 +28,7 @@
             <div><label for="invPrice">Price*:</label><input type="number" name="inv_price" id="invPrice" value="<%= locals.inv_price %>" required></div>
             <div><label for="invMiles">Miles*:</label><input type="number" name="inv_miles" id="invMiles" value="<%= locals.inv_miles %>" required></div>
             <div><label for="invColor">Color*:</label><input type="text" name="inv_color" id="invColor" value="<%= locals.inv_color %>" pattern="[a-zA-Z]+" required></div>
-            <div><label for="classificationId">Classification*:</label><select name="classification_id" id="classificationId" value="<%= locals.classification_id %>" required><%- classificationOptions %></select></div>
+            <div><label for="classificationId">Classification*:</label><select name="classification_id" id="classificationId" required><%- classificationOptions %></select></div>
             <div class="buttonContainer"><input type="submit" value="Add Inventory"></div>
         </form>
         <div class="fineprint">* Denotes a required field.</div>
