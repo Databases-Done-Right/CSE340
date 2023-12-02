@@ -5,6 +5,9 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities/")
 const regValidate = require('../utilities/account-validation')
 
+// Route to main account management view
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement));
+
 // Route to build account by subpage
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
@@ -24,7 +27,7 @@ router.post(
     "/login",
     regValidate.loginRules(),
     regValidate.checkLoginData,
-    utilities.handleErrors(accountController.registerAccount)
+    utilities.handleErrors(accountController.accountLogin)
   )
 
 module.exports = router;
