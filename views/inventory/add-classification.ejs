@@ -20,7 +20,7 @@
     <div id="loginFormContainer">
         <form action="/inv/management/classification" method="post">
             <div class="inputInstructions">Use this form to create a new vehicle classification. Please note, classification names cannot contain spaces or special characters.</div>
-            <div><span>Classification Name*:</span><input type="text" name="classification_name" id="classificationName" value="<%= locals.classificationName %>" pattern="[a-zA-Z0-9]+" required></div>
+            <div><label>Classification Name*:</label><input type="text" name="classification_name" id="classificationName" value="<%= locals.classificationName %>" pattern="[a-zA-Z0-9]+" required></div>
             <div class="buttonContainer"><input type="submit" value="Add Classification"></div>
         </form>
         <div class="fineprint">* Denotes a required field.</div>
