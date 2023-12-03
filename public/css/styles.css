@@ -322,3 +322,11 @@ footer p {
 #inventoryDisplay td a:hover {
   text-decoration:underline;
 }
+
+#tools a:hover {
+  text-decoration:underline;
+}
+
+#tools > a:not(:first-child) {
+  margin-left:20px;
+}

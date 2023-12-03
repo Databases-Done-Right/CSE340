@@ -18,11 +18,18 @@
 
 <div class="alignCenter">
     <div id="loginFormContainer">
-        <form action="/account/register" method="post">
+        <h2>Update Account Information</h2>
+        <form action="/account/edit" method="post">
             <div><label for="accountFirstname">First Name*:</label><input type="text" name="account_firstname" id="accountFirstname" value="<%= locals.account_firstname %>" required></div>
             <div><label for="accountLastname">Last Name*:</label><input type="text" name="account_lastname" id="accountLastname" value="<%= locals.account_lastname %>" required></div>
             <div><label for="accountEmail">Email*:</label><input type="email" name="account_email" id="accountEmail" value="<%= locals.account_email %>" required></div>
-            <div><label for="accountPassword">Password*:</label><input type="password" name="account_password" id="accountPassword" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></div>
+            <div class="buttonContainer"><input type="submit" value="Update Account"></div>
+            <input type="hidden" name="account_id"<% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>
+        </form>
+        
+        <h2>Change Password</h2>
+        <form action="/account/change-password" method="post">
+            <div><label for="accountPassword">New Password*:</label><input type="password" name="account_password" id="accountPassword" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></div>
             <div class="inputInstructions">
                 <ul>
                     <li>Your password must be a minimum of 12 characters in length</li>
@@ -31,9 +38,10 @@
                     <li>Your password must include at least 1 special character</li>
                 </ul>
             </div>
-            <div class="buttonContainer"><input type="submit" value="Register"></div>
+            <div class="buttonContainer"><input type="submit" value="Change Password"></div>
+            <input type="hidden" name="account_id"<% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>
         </form>
         <div class="fineprint">* Denotes a required field.</div>
-        
+
     </div>
 </div>

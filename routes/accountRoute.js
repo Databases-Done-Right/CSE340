@@ -11,6 +11,18 @@ router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.b
 // Route to build account by subpage
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
+// Route to logout
+router.get("/logout", utilities.handleErrors(accountController.accountLogout));
+
+// Route to build account by subpage
+router.get("/edit/:accountId", utilities.handleErrors(accountController.buildAccountEditView));
+
+// Route to update an account's information
+router.post("/edit/", utilities.checkLogin, regValidate.accountUpdateRules(), regValidate.checkAccountUpdateData, utilities.handleErrors(accountController.updateAccount))
+
+// Route to change an account's password
+router.post("/change-password/", utilities.checkLogin, regValidate.passwordUpdateRules(), regValidate.checkPasswordUpdateData, utilities.handleErrors(accountController.updateAccountPassword))
+
 // Route to build account signup subpage
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
