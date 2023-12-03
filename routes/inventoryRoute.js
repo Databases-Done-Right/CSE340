@@ -20,6 +20,12 @@ router.get("/edit/:vehicleId", utilities.handleErrors(invController.buildInvento
 // Route to update an inventory item
 router.post("/update/", invValidate.inventoryUpdateRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
 
+// Route to delete an inventory item
+router.get("/delete/:vehicleId", utilities.handleErrors(invController.buildInventoryDeleteView))
+
+// Route to perform the inventory item delete
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
+
 // Route to inventory classification management form view
 router.get("/management/classification/", utilities.handleErrors(invController.buildManagementClassificationForm));
 

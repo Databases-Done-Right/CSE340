@@ -1,0 +1,34 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%# Message Block %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<p>You are about to delete this vehicle. This process cannot be undone. Are you absolutely sure that you want to do this?</p>
+<div class="alignCenter">
+    <div id="loginFormContainer">
+        <form id="deleteForm" action="/inv/delete" method="post">
+            <div><label for="invMake">Make:</label><input type="text" name="inv_make" id="invMake" value="<%= locals.inv_make %>" disabled></div>
+            <div><label for="invModel">Model:</label><input type="text" name="inv_model" id="invModel" value="<%= locals.inv_model %>" disabled></div>
+            <div><label for="invYear">Year:</label><input type="number" name="inv_year" id="invYear" min="1900" max="2023" value="<%= locals.inv_year %>" disabled></div>
+            <div><label for="invPrice">Price:</label><input type="number" name="inv_price" id="invPrice" value="<%= locals.inv_price %>" disabled></div>
+            <div class="buttonContainer"><input type="submit" name="submit" value="Delete"></div>
+
+            <input type="hidden" name="inv_id"
+                <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+            <% } %>>
+        </form>
+    </div>
+</div>
