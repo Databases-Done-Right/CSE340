@@ -263,4 +263,67 @@ invCont.updateInventory = async function updateInventory(req, res) {
   }
 }
 
+/* ****************************************
+ *  Build inventory delete form
+ * ************************************** */
+invCont.buildInventoryDeleteView = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.vehicleId)
+  const nav = await utilities.getNav()
+  const inventoryData = await invModel.getInventoryByVehicleId(inventory_id)
+  const inventoryInfo = inventoryData[0];
+  const itemName = `${inventoryInfo.inv_make} ${inventoryInfo.inv_model}`
+  const classificationOptions = await utilities.getClassificationOptions(inventoryInfo.classification_id)
+  res.render("./inventory/delete-inventory", {
+    metaTitle: "Delete Inventory - " + itemName + " - CSE 340",
+    title: "Delete Inventory - " + itemName,
+    nav,
+    classificationOptions,
+    inv_id: inventoryInfo.inv_id,
+    inv_make: inventoryInfo.inv_make,
+    inv_model: inventoryInfo.inv_model,
+    inv_year: inventoryInfo.inv_year,
+    inv_description: inventoryInfo.inv_description,
+    inv_image: inventoryInfo.inv_image,
+    inv_thumbnail: inventoryInfo.inv_thumbnail,
+    inv_price: inventoryInfo.inv_price,
+    inv_miles: inventoryInfo.inv_miles,
+    inv_color: inventoryInfo.inv_color,
+    classificationId: inventoryInfo.classification_id,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Delete Inventory Data
+* *************************************** */
+invCont.deleteInventory = async function deleteInventory(req, res) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+  } = req.body
+  const theVehicle = await invModel.getInventoryByVehicleId(parseInt(inv_id))
+  const deleteResult = await invModel.deleteInventory(
+    parseInt(inv_id),
+  )
+
+  const itemName = `${theVehicle[0].inv_make} ${theVehicle[0].inv_model}`
+  if (deleteResult) {
+    req.flash("notice", `The ${itemName} was successfully deleted.`)
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("inventory/delete-inventory", {
+      metaTitle: `Delete ${itemName} Failed - CSE 340`,
+      title: `Delete ${itemName}`,
+      nav,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      errors: null,
+    })
+  }
+}
+
 module.exports = invCont
