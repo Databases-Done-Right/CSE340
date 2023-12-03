@@ -303,3 +303,22 @@ footer p {
   font-size:12px;
   text-align:left;
 }
+
+#inventoryDisplay {
+  border:Solid 1px #ddd;
+  font-size:12px;
+}
+
+#inventoryDisplay td {
+  border:Solid 1px #ddd;
+  padding:2px 4px;
+  margin:1px;
+}
+
+#inventoryDisplay td a {
+  text-decoration:none;
+}
+
+#inventoryDisplay td a:hover {
+  text-decoration:underline;
+}

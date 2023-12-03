@@ -12,10 +12,19 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:vehicleId", utilities.handleErrors(invController.buildByVehicleId));
 
 // Route to inventory management links view
-router.get("/", utilities.handleErrors(invController.buildManagementLinks));
+router.get("/", utilities.handleErrors(invController.buildManagementView));
+
+// Route to edit an inventory item
+router.get("/edit/:vehicleId", utilities.handleErrors(invController.buildInventoryEditView))
+
+// Route to update an inventory item
+router.post("/update/", invValidate.inventoryUpdateRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
 
 // Route to inventory classification management form view
 router.get("/management/classification/", utilities.handleErrors(invController.buildManagementClassificationForm));
+
+// Route to retrieve classifications via ajax
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to register new classification
 router.post("/management/classification/", invValidate.classificationRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.registerClassification));
