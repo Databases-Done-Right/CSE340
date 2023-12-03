@@ -18,7 +18,7 @@
 
 <div class="alignCenter">
     <div id="loginFormContainer">
-        <form action="/inv/update" method="post">
+        <form id="updateForm" action="/inv/update" method="post">
             <div><label for="invMake">Make*:</label><input type="text" name="inv_make" id="invMake" value="<%= locals.inv_make %>" required></div>
             <div><label for="invModel">Model*:</label><input type="text" name="inv_model" id="invModel" value="<%= locals.inv_model %>" required></div>
             <div><label for="invYear">Year*:</label><input type="number" name="inv_year" id="invYear" min="1900" max="2023" value="<%= locals.inv_year %>" required></div>
@@ -29,7 +29,7 @@
             <div><label for="invMiles">Miles*:</label><input type="number" name="inv_miles" id="invMiles" value="<%= locals.inv_miles %>" required></div>
             <div><label for="invColor">Color*:</label><input type="text" name="inv_color" id="invColor" value="<%= locals.inv_color %>" pattern="[a-zA-Z]+" required></div>
             <div><label for="classificationId">Classification*:</label><select name="classification_id" id="classificationId" required><%- classificationOptions %></select></div>
-            <div class="buttonContainer"><input type="submit" name="submit" value="Update Vehicle"></div>
+            <div class="buttonContainer"><input type="submit" name="submit" value="Update Vehicle" disabled></div>
 
             <input type="hidden" name="inv_id"
                 <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
@@ -39,3 +39,5 @@
         
     </div>
 </div>
+
+<script src="../../js/inv-update.js"></script>
