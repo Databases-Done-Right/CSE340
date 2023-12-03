@@ -11,7 +11,7 @@ const accountCont = {}
 * *************************************** */
 accountCont.buildManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
-  res.render("account/management", {
+  res.render("./account/management", {
     metaTitle: `Account Management - CSE 340`,
     title: "Management",
     nav,
@@ -99,7 +99,7 @@ accountCont.registerAccount = async function registerAccount(req, res) {
 /* ****************************************
  *  Process login request
  * ************************************ */
-accountCont.accountLogin = async function accountLogin(req, res) {
+accountCont.accountLogin = async function accountLogin(req, res, next) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
@@ -123,6 +123,119 @@ accountCont.accountLogin = async function accountLogin(req, res) {
    }
   } catch (error) {
    return new Error('Access Forbidden')
+  }
+}
+
+/* ****************************************
+ *  Process logout request
+ * ************************************ */
+accountCont.accountLogout = async function accountLogout(req, res) {
+  let nav = await utilities.getNav()
+   res.cookie("jwt", "", { httpOnly: true, maxAge: 0 })
+   return res.redirect("/")
+}
+
+/* ****************************************
+ *  Build account edit form
+ * ************************************** */
+accountCont.buildAccountEditView = async function (req, res, next) {
+  const account_id = parseInt(req.params.accountId)
+  const nav = await utilities.getNav()
+  const accountInfo = await accountModel.getAccountById(account_id)
+  res.render("./account/edit-account", {
+    metaTitle: "Edit Account - " + accountInfo.account_firstname + " " + accountInfo.account_lastname + " - CSE 340",
+    title: "Edit Account - " + accountInfo.account_firstname + " " + accountInfo.account_lastname,
+    nav,
+    account_id,
+    account_firstname: accountInfo.account_firstname,
+    account_lastname: accountInfo.account_lastname,
+    account_email: accountInfo.account_email,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Process Account Updates
+* *************************************** */
+accountCont.updateAccount = async function updateAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+  const regResult = await accountModel.updateAccount(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations ${account_firstname}, your account information has been successfully updated!`
+    )
+    res.status(201).render("./account/management", {
+      metaTitle: `Account Management - CSE 340`,
+      title: "Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("./account/management", {
+      metaTitle: `Account Management - CSE 340`,
+      title: "Management",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+*  Process Registration
+* *************************************** */
+accountCont.updateAccountPassword = async function updateAccountPassword(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_password } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("./account/edit-account", {
+      metaTitle: `Account Management - CSE 340`,
+      title: "Management",
+      nav,
+      errors: null,
+    })
+  }
+
+  const regResult = await accountModel.updateAccountPassword(
+    account_id,
+    hashedPassword
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, your password has been successfully updated.`
+    )
+    res.status(201).render("./account/management", {
+      metaTitle: `Account Management - CSE 340`,
+      title: "Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("./account/management", {
+      metaTitle: `Account Management - CSE 340`,
+      title: "Management",
+      nav,
+      errors: null,
+    })
   }
 }
 

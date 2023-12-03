@@ -12,33 +12,33 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:vehicleId", utilities.handleErrors(invController.buildByVehicleId));
 
 // Route to inventory management links view
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get("/", utilities.checkAuthorizedUser, utilities.handleErrors(invController.buildManagementView));
 
 // Route to edit an inventory item
-router.get("/edit/:vehicleId", utilities.handleErrors(invController.buildInventoryEditView))
+router.get("/edit/:vehicleId", utilities.checkAuthorizedUser, utilities.handleErrors(invController.buildInventoryEditView))
 
 // Route to update an inventory item
-router.post("/update/", invValidate.inventoryUpdateRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
+router.post("/update/", utilities.checkAuthorizedUser, invValidate.inventoryUpdateRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory))
 
 // Route to delete an inventory item
-router.get("/delete/:vehicleId", utilities.handleErrors(invController.buildInventoryDeleteView))
+router.get("/delete/:vehicleId", utilities.checkAuthorizedUser, utilities.handleErrors(invController.buildInventoryDeleteView))
 
 // Route to perform the inventory item delete
-router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
+router.post("/delete/", utilities.checkAuthorizedUser, utilities.handleErrors(invController.deleteInventory))
 
 // Route to inventory classification management form view
-router.get("/management/classification/", utilities.handleErrors(invController.buildManagementClassificationForm));
+router.get("/management/classification/", utilities.checkAuthorizedUser, utilities.handleErrors(invController.buildManagementClassificationForm));
 
 // Route to retrieve classifications via ajax
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to register new classification
-router.post("/management/classification/", invValidate.classificationRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.registerClassification));
+router.post("/management/classification/", utilities.checkAuthorizedUser, invValidate.classificationRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.registerClassification));
 
 // Route to inventory management form view
-router.get("/management/inventory/", utilities.handleErrors(invController.buildManagementInventoryForm));
+router.get("/management/inventory/", utilities.checkAuthorizedUser, utilities.handleErrors(invController.buildManagementInventoryForm));
 
 // Route to register new inventory
-router.post( "/management/inventory/", invValidate.inventoryRules(), invValidate.checkInventoryData, utilities.handleErrors(invController.registerInventory));
+router.post( "/management/inventory/", utilities.checkAuthorizedUser, invValidate.inventoryRules(), invValidate.checkInventoryData, utilities.handleErrors(invController.registerInventory));
 
 module.exports = router;

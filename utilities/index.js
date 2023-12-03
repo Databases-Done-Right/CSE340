@@ -140,6 +140,18 @@ Util.checkLogin = (req, res, next) => {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
- }
+}
+
+/* ****************************************
+ *  Check Authorized User
+ * ************************************ */
+Util.checkAuthorizedUser = (req, res, next) => {
+  if(res?.locals?.accountData?.account_type == "Admin" || res?.locals?.accountData?.account_type == "Employee") {
+    next()
+  } else {
+    req.flash("notice", "Please login to continue.")
+    return res.redirect("/account/login")
+  }
+}
 
 module.exports = Util
