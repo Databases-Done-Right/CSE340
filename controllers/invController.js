@@ -46,12 +46,14 @@ invCont.buildByVehicleId = async function (req, res, next) {
 /* ***************************
  *  Build management form links
  * ************************** */
-invCont.buildManagementLinks = async function (req, res, next) {
+invCont.buildManagementView = async function (req, res, next) {
   const nav = await utilities.getNav()
+  const classificationSelect = await utilities.getClassificationOptions()
   res.render("./inventory/management", {
     metaTitle: `Inventory Management - CSE 340`,
     title: "Inventory Management",
     nav,
+    classificationSelect,
     errors: null,
   })
 }
@@ -153,6 +155,109 @@ invCont.registerInventory = async function registerInventory(req, res) {
       classificationOptions,
       inv_image: "/images/vehicles/no-image.png",
       inv_thumbnail: "/images/vehicles/no-image-tn.png",
+      errors: null,
+    })
+  }
+}
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+/* ****************************************
+ *  Build inventory edit form
+ * ************************************** */
+invCont.buildInventoryEditView = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.vehicleId)
+  const nav = await utilities.getNav()
+  const inventoryData = await invModel.getInventoryByVehicleId(inventory_id)
+  const inventoryInfo = inventoryData[0];
+  const classificationOptions = await utilities.getClassificationOptions(inventoryInfo.classification_id)
+  res.render("./inventory/edit-inventory", {
+    metaTitle: "Edit Inventory - " + inventoryInfo.inv_make + " " + inventoryInfo.inv_model + " - CSE 340",
+    title: "Edit Inventory - " + inventoryInfo.inv_make + " " + inventoryInfo.inv_model,
+    nav,
+    classificationOptions,
+    inv_id: inventoryInfo.inv_id,
+    inv_make: inventoryInfo.inv_make,
+    inv_model: inventoryInfo.inv_model,
+    inv_year: inventoryInfo.inv_year,
+    inv_description: inventoryInfo.inv_description,
+    inv_image: inventoryInfo.inv_image,
+    inv_thumbnail: inventoryInfo.inv_thumbnail,
+    inv_price: inventoryInfo.inv_price,
+    inv_miles: inventoryInfo.inv_miles,
+    inv_color: inventoryInfo.inv_color,
+    classificationId: inventoryInfo.classification_id,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Update Inventory Data
+* *************************************** */
+invCont.updateInventory = async function updateInventory(req, res) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+  const updateResult = await invModel.updateInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv/")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+      metaTitle: `Edit ${itemName} Failed - CSE 340`,
+      title: `Edit ${itemName}`,
+      nav,
+      classificationOptions,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
       errors: null,
     })
   }

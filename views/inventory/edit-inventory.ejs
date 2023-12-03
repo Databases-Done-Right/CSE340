@@ -1,0 +1,41 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%# Message Block %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<div class="alignCenter">
+    <div id="loginFormContainer">
+        <form action="/inv/update" method="post">
+            <div><label for="invMake">Make*:</label><input type="text" name="inv_make" id="invMake" value="<%= locals.inv_make %>" required></div>
+            <div><label for="invModel">Model*:</label><input type="text" name="inv_model" id="invModel" value="<%= locals.inv_model %>" required></div>
+            <div><label for="invYear">Year*:</label><input type="number" name="inv_year" id="invYear" min="1900" max="2023" value="<%= locals.inv_year %>" required></div>
+            <div><label for="invDescription">Description*:</label><input type="text" name="inv_description" id="invDescription" value="<%= locals.inv_description %>" required></div>
+            <div><label for="invImage">Image*:</label><input type="text" name="inv_image" id="invImage" value="<%= locals.inv_image %>" pattern="[a-zA-Z0-9./_-]+" placeholder="/images/vehicles/no-image.png" required></div>
+            <div><label for="invThumbnail">Thumbnail Image*:</label><input type="text" name="inv_thumbnail" id="invThumbnail" value="<%= locals.inv_thumbnail %>" pattern="[a-zA-Z0-9./_-]+" placeholder="/images/vehicles/no-image-tn.png" required></div>
+            <div><label for="invPrice">Price*:</label><input type="number" name="inv_price" id="invPrice" value="<%= locals.inv_price %>" required></div>
+            <div><label for="invMiles">Miles*:</label><input type="number" name="inv_miles" id="invMiles" value="<%= locals.inv_miles %>" required></div>
+            <div><label for="invColor">Color*:</label><input type="text" name="inv_color" id="invColor" value="<%= locals.inv_color %>" pattern="[a-zA-Z]+" required></div>
+            <div><label for="classificationId">Classification*:</label><select name="classification_id" id="classificationId" required><%- classificationOptions %></select></div>
+            <div class="buttonContainer"><input type="submit" name="submit" value="Update Vehicle"></div>
+
+            <input type="hidden" name="inv_id"
+                <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+            <% } %>>
+        </form>
+        <div class="fineprint">* Denotes a required field.</div>
+        
+    </div>
+</div>
