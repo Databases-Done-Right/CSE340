@@ -1,0 +1,33 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%# Message Block %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<div class="alignCenter">
+    <div id="loginFormContainer">
+        <form id="updateForm" action="/dealership/edit" method="post">
+            <div><label for="dealershipName">Name*:</label><input type="text" name="dealership_name" id="dealershipName" value="<%= locals.dealership_name %>" required></div>
+            <div><label for="dealershipAddress">Street Address*:</label><input type="text" name="dealership_address" id="dealershipAddress" value="<%= locals.dealership_address %>" required></div>
+            <div class="buttonContainer"><input type="submit" value="Update" disabled></div>
+            <input type="hidden" name="dealership_id"
+                <% if(locals.dealership_id) { %> value="<%= locals.dealership_id %>"
+            <% } %>>
+            <div class="fineprint">* Denotes a required field.</div>
+        </form>
+    </div>
+</div>
+
+<script src="../../js/dealership-update.js"></script>

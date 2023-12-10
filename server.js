@@ -15,6 +15,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const dealershipRoute = require("./routes/dealershipRoute")
 const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const bodyParser = require("body-parser")
@@ -87,6 +88,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Account routes
 app.use("/account", accountRoute)
+
+// Dealership routes
+app.use("/dealership", dealershipRoute)
 
 // Inventory routes - any route that starts with /inv will be redirected to the inventoryRoute file to find the rest of the route
 app.use("/inv", inventoryRoute)

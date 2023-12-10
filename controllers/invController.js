@@ -22,6 +22,24 @@ invCont.buildByClassificationId = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Build inventory by dealership view
+ * ************************** */
+invCont.buildByDealershipId = async function (req, res, next) {
+  const dealership_id = req.params.dealershipId
+  const data = await invModel.getInventoryByDealershipId(dealership_id)
+  const grid = await utilities.buildClassificationGrid(data)
+  let nav = await utilities.getNav()
+  const className = data[0].dealership_name + ' (' + data[0].dealership_address + ')'
+  res.render("./inventory/classification", {
+    metaTitle: `${className} Vehicles - CSE 340`,
+    title: className + " vehicles",
+    nav,
+    grid,
+    errors: null,
+  })
+}
+
+/* ***************************
  *  Build vehicle by vehicle view
  * ************************** */
 invCont.buildByVehicleId = async function (req, res, next) {
@@ -64,11 +82,13 @@ invCont.buildManagementView = async function (req, res, next) {
 invCont.buildManagementInventoryForm = async function (req, res, next) {
   const nav = await utilities.getNav()
   const classificationOptions = await utilities.getClassificationOptions()
+  const dealershipOptions = await utilities.getDealershipOptions()
   res.render("./inventory/add-inventory", {
     metaTitle: `Add Inventory Form - CSE 340`,
     title: "Add New Inventory",
     nav,
     classificationOptions,
+    dealershipOptions,
     inv_image: "/images/vehicles/no-image.png",
     inv_thumbnail: "/images/vehicles/no-image-tn.png",
     errors: null,
@@ -126,10 +146,11 @@ invCont.registerClassification = async function registerClassification(req, res)
 invCont.registerInventory = async function registerInventory(req, res) {
   let nav = await utilities.getNav()
   const classificationOptions = await utilities.getClassificationOptions()
-  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  const dealershipOptions = await utilities.getDealershipOptions()
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, dealership_id } = req.body
 
   const regResult = await invModel.registerInventory(
-    inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+    inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, dealership_id
   )
 
   if (regResult) {
@@ -142,6 +163,7 @@ invCont.registerInventory = async function registerInventory(req, res) {
       title: "Add New Inventory",
       nav,
       classificationOptions,
+      dealershipOptions,
       inv_image: "/images/vehicles/no-image.png",
       inv_thumbnail: "/images/vehicles/no-image-tn.png",
       errors: null,
@@ -153,6 +175,7 @@ invCont.registerInventory = async function registerInventory(req, res) {
       title: "Add New Inventory",
       nav,
       classificationOptions,
+      dealershipOptions,
       inv_image: "/images/vehicles/no-image.png",
       inv_thumbnail: "/images/vehicles/no-image-tn.png",
       errors: null,
@@ -182,11 +205,13 @@ invCont.buildInventoryEditView = async function (req, res, next) {
   const inventoryData = await invModel.getInventoryByVehicleId(inventory_id)
   const inventoryInfo = inventoryData[0];
   const classificationOptions = await utilities.getClassificationOptions(inventoryInfo.classification_id)
+  const dealershipOptions = await utilities.getDealershipOptions(inventoryInfo.dealership_id)
   res.render("./inventory/edit-inventory", {
     metaTitle: "Edit Inventory - " + inventoryInfo.inv_make + " " + inventoryInfo.inv_model + " - CSE 340",
     title: "Edit Inventory - " + inventoryInfo.inv_make + " " + inventoryInfo.inv_model,
     nav,
     classificationOptions,
+    dealershipOptions,
     inv_id: inventoryInfo.inv_id,
     inv_make: inventoryInfo.inv_make,
     inv_model: inventoryInfo.inv_model,
@@ -198,6 +223,7 @@ invCont.buildInventoryEditView = async function (req, res, next) {
     inv_miles: inventoryInfo.inv_miles,
     inv_color: inventoryInfo.inv_color,
     classificationId: inventoryInfo.classification_id,
+    dealershipId: inventoryInfo.dealership_id,
     errors: null,
   })
 }
@@ -219,6 +245,7 @@ invCont.updateInventory = async function updateInventory(req, res) {
     inv_miles,
     inv_color,
     classification_id,
+    dealership_id,
   } = req.body
   const updateResult = await invModel.updateInventory(
     inv_id,  
@@ -231,7 +258,8 @@ invCont.updateInventory = async function updateInventory(req, res) {
     inv_year,
     inv_miles,
     inv_color,
-    classification_id
+    classification_id,
+    dealership_id
   )
 
   if (updateResult) {
@@ -239,7 +267,8 @@ invCont.updateInventory = async function updateInventory(req, res) {
     req.flash("notice", `The ${itemName} was successfully updated.`)
     res.redirect("/inv/")
   } else {
-    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const classificationOptions = await utilities.buildClassificationList(classification_id)
+    const dealershipOptions = await utilities.getDealershipOptions(dealership_id)
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the insert failed.")
     res.status(501).render("inventory/edit-inventory", {
@@ -247,6 +276,7 @@ invCont.updateInventory = async function updateInventory(req, res) {
       title: `Edit ${itemName}`,
       nav,
       classificationOptions,
+      dealershipOptions,
       inv_id,
       inv_make,
       inv_model,
@@ -258,6 +288,7 @@ invCont.updateInventory = async function updateInventory(req, res) {
       inv_miles,
       inv_color,
       classification_id,
+      dealership_id,
       errors: null,
     })
   }
@@ -273,11 +304,13 @@ invCont.buildInventoryDeleteView = async function (req, res, next) {
   const inventoryInfo = inventoryData[0];
   const itemName = `${inventoryInfo.inv_make} ${inventoryInfo.inv_model}`
   const classificationOptions = await utilities.getClassificationOptions(inventoryInfo.classification_id)
+  const dealershipOptions = await utilities.getDealershipOptions(inventoryInfo.dealership_id)
   res.render("./inventory/delete-inventory", {
     metaTitle: "Delete Inventory - " + itemName + " - CSE 340",
     title: "Delete Inventory - " + itemName,
     nav,
     classificationOptions,
+    dealershipOptions,
     inv_id: inventoryInfo.inv_id,
     inv_make: inventoryInfo.inv_make,
     inv_model: inventoryInfo.inv_model,
@@ -289,6 +322,7 @@ invCont.buildInventoryDeleteView = async function (req, res, next) {
     inv_miles: inventoryInfo.inv_miles,
     inv_color: inventoryInfo.inv_color,
     classificationId: inventoryInfo.classification_id,
+    dealershipId: inventoryInfo.dealership_id,
     errors: null,
   })
 }

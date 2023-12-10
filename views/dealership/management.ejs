@@ -1,0 +1,26 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%# Message Block %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<ul>
+    <li><b><a href="/dealership/add/">New Dealership</a></b> - Create a new dealership.</li>
+</ul>
+<h2>Dealership Management</h2>
+<table id="dealershipDisplay"></table>
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<script src="../../js/dealership.js"></script>
