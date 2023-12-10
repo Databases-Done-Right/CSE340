@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
+const dealershipModel = require("../models/dealership-model")
 
 const Util = {}
 
@@ -25,6 +26,25 @@ Util.getNav = async function (req, res, next) {
   })
   list += "</ul>"
   return list
+}
+
+/* **************************************
+* Build the dealership view HTML
+* ************************************ */
+Util.buildDealershipGrid = async function(data){
+  let grid = '';
+  if(data.length > 0){
+    data.forEach(dealer => { 
+      grid +='<div>';
+        grid += `<a href="../../inv/dealership/${dealer.dealership_id}" title="${dealer.dealership_name} ${dealer.dealership_address} - Used Cars">`;
+          grid += `${dealer.dealership_name} (${dealer.dealership_address})`;
+        grid += '</a>';
+      grid += '</div>';
+    })
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
 }
 
 /* **************************************
@@ -67,6 +87,18 @@ Util.getClassificationOptions = async function (req, res, next) {
   let tbr = `<option value="" label="No option selected"></option>`;
   data.rows.forEach((row) => {
     tbr += `<option value="${row.classification_id}"${row.classification_id == req ? " selected" : "" }>${row.classification_name}</option>`;
+  })
+  return tbr
+}
+
+/* ************************
+ * Constructs the dealership options HTML for forms
+ ************************** */
+Util.getDealershipOptions = async function (req, res, next) {
+  let data = await dealershipModel.getAllDealerships()
+  let tbr = `<option value="" label="No option selected"></option>`;
+  data.rows.forEach((row) => {
+    tbr += `<option value="${row.dealership_id}"${row.dealership_id == req ? " selected" : "" }>${row.dealership_name}</option>`;
   })
   return tbr
 }
@@ -150,6 +182,18 @@ Util.checkAuthorizedUser = (req, res, next) => {
     next()
   } else {
     req.flash("notice", "Please login to continue.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Check Is Admin
+ * ************************************ */
+Util.checkIsAdmin = (req, res, next) => {
+  if(res?.locals?.accountData?.account_type == "Admin") {
+    next()
+  } else {
+    req.flash("notice", "You must be an administrator to access this page.")
     return res.redirect("/account/login")
   }
 }

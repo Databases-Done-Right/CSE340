@@ -1,0 +1,62 @@
+const pool = require("../database/")
+
+/* *****************************
+*   Register new dealership
+* *************************** */
+async function registerDealership(dealership_name, dealership_address){
+    try {
+      const sql = "INSERT INTO dealership (dealership_name, dealership_address) VALUES ($1, $2) RETURNING *"
+      return await pool.query(sql, [dealership_name, dealership_address])
+    } catch (error) {
+      return error.message
+    }
+}
+
+/* *****************************
+* Return dealership data using account_id
+* ***************************** */
+async function getDealershipById (dealership_id) {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM dealership WHERE dealership_id = $1',
+      [dealership_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching dealership found")
+  }
+}
+
+/* ***************************
+ *  Get all classification data
+ * ************************** */
+async function getAllDealerships(){
+    return await pool.query("SELECT * FROM public.dealership ORDER BY dealership_name")
+  }
+
+/* *****************************
+*   Delete Dealership Data
+* *************************** */
+async function deleteDealership(dealership_id){
+    try {
+      const sql = 'DELETE FROM dealership WHERE dealership_id = $1';
+      const data = await pool.query(sql, [dealership_id])
+      return data
+    } catch (error) {
+      console.error("Delete dealership error: " + error)
+    }
+}
+
+/* *****************************
+*   Update account
+* *************************** */
+async function updateDealership(dealership_id, dealership_name, dealership_address){
+  try {
+    const sql = "UPDATE dealership SET dealership_name = $2, dealership_address = $3 WHERE dealership_id = $1 RETURNING *"
+    const data = await pool.query(sql, [dealership_id, dealership_name, dealership_address])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
+
+module.exports = { registerDealership, getAllDealerships, getDealershipById, deleteDealership, updateDealership }

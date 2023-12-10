@@ -101,6 +101,7 @@ validate.inventoryRules = () => {
         .trim()
         .isInt({ min: 1 })
         .withMessage("Please select a classification for this vehicle."), // on error this message is sent.
+
     ]
 }
 
@@ -108,18 +109,20 @@ validate.inventoryRules = () => {
  * Check data and return errors or continue to inventory addition
  * ***************************** */
 validate.checkInventoryData = async (req, res, next) => {
-    const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+    const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, dealership_id } = req.body
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
       const classificationOptions = await utilities.getClassificationOptions(classification_id)
+      const dealershipOptions = await utilities.getDealershipOptions(dealership_id)
       res.render("./inventory/add-inventory", {
         errors,
         metaTitle: `Add Inventory Form - CSE 340`,
         title: "Add New Inventory",    
         nav,
         classificationOptions,
+        dealershipOptions,
         inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color,
       })
       return
@@ -203,18 +206,20 @@ validate.inventoryUpdateRules = () => {
  * Check data and return errors or continue to inventory edit
  * ***************************** */
 validate.checkUpdateData = async (req, res, next) => {
-  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, inv_id } = req.body
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, inv_id, dealership_id } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
     const classificationOptions = await utilities.getClassificationOptions(classification_id)
+    const dealershipOptions = await utilities.getDealershipOptions(dealership_id)
     res.render("./inventory/edit-inventory", {
       errors,
       metaTitle: "Edit Inventory - " + inv_make + " " + inv_model + " - CSE 340",
       title: "Edit Inventory - " + inv_make + " " + inv_model,   
       nav,
       classificationOptions,
+      dealershipOptions,
       inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, inv_id,
     })
     return

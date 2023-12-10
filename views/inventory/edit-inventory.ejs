@@ -29,6 +29,7 @@
             <div><label for="invMiles">Miles*:</label><input type="number" name="inv_miles" id="invMiles" value="<%= locals.inv_miles %>" required></div>
             <div><label for="invColor">Color*:</label><input type="text" name="inv_color" id="invColor" value="<%= locals.inv_color %>" pattern="[a-zA-Z]+" required></div>
             <div><label for="classificationId">Classification*:</label><select name="classification_id" id="classificationId" required><%- classificationOptions %></select></div>
+            <div><label for="dealershipId">Dealership:</label><select name="dealership_id" id="dealershipId"><%- dealershipOptions %></select></div>
             <div class="buttonContainer"><input type="submit" name="submit" value="Update Vehicle" disabled></div>
 
             <input type="hidden" name="inv_id"
