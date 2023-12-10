@@ -29,7 +29,7 @@ invCont.buildByDealershipId = async function (req, res, next) {
   const data = await invModel.getInventoryByDealershipId(dealership_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
-  const className = data[0].dealership_name + ' (' + data[0].dealership_address + ')'
+  const className = data[0]?.dealership_name ? data[0].dealership_name + ' (' + data[0].dealership_address + ')' : 'This Dealership Has No '
   res.render("./inventory/classification", {
     metaTitle: `${className} Vehicles - CSE 340`,
     title: className + " vehicles",
